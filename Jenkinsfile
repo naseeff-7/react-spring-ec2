@@ -9,17 +9,16 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/naseeff-7/react-spring-ec2.git'
-            }
-        }
-
         stage('Copy files to Deployment Server') {
             steps {
                 sh '''
                     ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} "mkdir -p ${DEPLOY_PATH}"
-                    rsync -avz --delete -e "ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no" ./ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/
+                    rsync -avz --delete \
+                      --exclude '.git' \
+                      --exclude 'frontend/node_modules' \
+                      --exclude 'backend/target' \
+                      -e "ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no" \
+                      ./ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/
                 '''
             }
         }
