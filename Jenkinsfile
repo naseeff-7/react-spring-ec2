@@ -1,4 +1,4 @@
-	pipeline {
+pipeline {
     agent any
 
     environment {
@@ -11,7 +11,7 @@
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url:'https://github.com/naseeff-7/react-spring-ec2.git'
+                git branch: 'main', url: 'https://github.com/naseeff-7/react-spring-ec2.git'
             }
         }
 
@@ -19,7 +19,7 @@
             steps {
                 sh '''
                     ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} "mkdir -p ${DEPLOY_PATH}"
-                    rsync -avz -e "ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no" ./ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/
+                    rsync -avz --delete -e "ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no" ./ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/
                 '''
             }
         }
@@ -29,8 +29,8 @@
                 sh '''
                     ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} "
                         cd ${DEPLOY_PATH} &&
-                        sudo docker compose down || true &&
-                        sudo docker compose up -d --build
+                        docker compose down || true &&
+                        docker compose up -d --build
                     "
                 '''
             }
