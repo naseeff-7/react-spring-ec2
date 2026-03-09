@@ -1,0 +1,14 @@
+services:
+  backend:
+    build: ./backend
+    container_name: springboot-backend
+    ports:
+      - "8085:8080"
+
+  frontend:
+    build: ./frontend
+    container_name: react-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
