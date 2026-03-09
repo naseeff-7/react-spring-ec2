@@ -11,7 +11,7 @@
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'git 'https://github.com/naseeff-7/react-spring-ec2.git''
+                git branch: 'main', url:'https://github.com/naseeff-7/react-spring-ec2.git'
             }
         }
 
