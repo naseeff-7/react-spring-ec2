@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEPLOY_HOST = "3.227.235.33"
+        DEPLOY_HOST = "98.92.162.237"
         DEPLOY_USER = "ubuntu"
         DEPLOY_PATH = "/home/ubuntu/deploy/react-spring"
         SSH_KEY = "/var/lib/jenkins/.ssh/devops.pem"
